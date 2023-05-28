@@ -1,3 +1,0 @@
-/home/aniket/code/glew-tut/cmake-build-debug/CMakeFiles/glfw_tut.dir
-/home/aniket/code/glew-tut/cmake-build-debug/CMakeFiles/edit_cache.dir
-/home/aniket/code/glew-tut/cmake-build-debug/CMakeFiles/rebuild_cache.dir
