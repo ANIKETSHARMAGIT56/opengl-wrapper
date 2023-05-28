@@ -1,5 +1,5 @@
 #pragma once
-#define ASSERT(x) if (!(x)) raise(SIGQUIT);
+#define ASSERT(x) if (!(x)) raise(SIGTRAP);
 #define GLDebug(x) GLClearErrors();\
                     x;\
                     ASSERT(GLCheckError())

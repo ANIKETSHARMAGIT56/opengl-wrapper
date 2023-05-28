@@ -1,4 +1,5 @@
 #pragma once
+#include "uniform.hpp"
 #include <renderer.h>
 #include <string>
 class Texture{
@@ -12,6 +13,4 @@ public:
     ~Texture();
     void Bind(unsigned int slot);
     void Unbind();
-
-    
 };

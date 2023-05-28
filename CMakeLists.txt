@@ -1,6 +1,7 @@
 #cmake
 cmake_minimum_required(VERSION 3.15)
 project(glfw_tut LANGUAGES CXX)
+
 add_executable(${PROJECT_NAME} src/main.cpp
                                src/renderer.cpp
                                src/vertexbuffer.cpp

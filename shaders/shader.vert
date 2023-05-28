@@ -6,6 +6,6 @@ uniform mat4 u_mvp;
 void main()
 {
 
-gl_Position =position;
+gl_Position = position;
 v_TexCoord = texCoord;
 }
