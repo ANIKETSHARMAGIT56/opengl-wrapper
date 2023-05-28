@@ -1,0 +1,10 @@
+# ninja log v5
+10	399	1684585262247159854	CMakeFiles/glfw_tut.dir/src/vertexbuffer.cpp.o	cce0b84bb0ac4242
+10	402	1684585262251159854	CMakeFiles/glfw_tut.dir/src/indexbuffer.cpp.o	f6f503dc3ae5b8d5
+10	603	1684585262451159849	CMakeFiles/glfw_tut.dir/src/vertexarray.cpp.o	70c4550bad15319c
+11	668	1684585262517159847	CMakeFiles/glfw_tut.dir/src/texture.cpp.o	ba9e39aa2c4425eb
+10	795	1684585262644159844	CMakeFiles/glfw_tut.dir/src/renderer.cpp.o	86b350c27769bf66
+10	811	1684585262660159843	CMakeFiles/glfw_tut.dir/src/shader.cpp.o	1d0f69c4b0d19101
+8	930	1684585262779159840	CMakeFiles/glfw_tut.dir/src/main.cpp.o	bb10f3debc6dc2d4
+11	973	1684585262821159839	CMakeFiles/glfw_tut.dir/src/stb_image.cpp.o	9432d0a3f3571d36
+973	1063	1684585262911159837	glfw_tut	e476036b19b1cce8

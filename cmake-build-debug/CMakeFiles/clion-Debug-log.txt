@@ -1,0 +1,10 @@
+cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_MAKE_PROGRAM=ninja -G Ninja -S /home/aniket/code/glew-tut -B /home/aniket/code/glew-tut/cmake-build-debug
+-- The CXX compiler identification is GNU 13.1.1
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Configuring done (0.1s)
+-- Generating done (0.0s)
+-- Build files have been written to: /home/aniket/code/glew-tut/cmake-build-debug
