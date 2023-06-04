@@ -1,5 +1,4 @@
 #pragma once
-#include "uniform.hpp"
 #include <renderer.h>
 #include <string>
 class Texture{
