@@ -1,7 +1,12 @@
 #cmake
 cmake_minimum_required(VERSION 3.15)
 project(glwrap LANGUAGES CXX)
+set(IMGUI_DIR ./imgui )
 
+include_directories(include/
+${IMGUI_DIR}/
+${IMGUI_DIR}/backends/
+)
 
 
 # shared library
@@ -19,15 +24,19 @@ find_package(glm REQUIRED)
 target_include_directories(${PROJECT_NAME} PUBLIC "include/")
 target_link_libraries(${PROJECT_NAME} PUBLIC glfw GL GLEW glm)
 
-
+add_library(imgui SHARED 
+${IMGUI_DIR}/imgui.cpp 
+${IMGUI_DIR}/imgui_demo.cpp 
+${IMGUI_DIR}/imgui_draw.cpp 
+${IMGUI_DIR}/imgui_tables.cpp 
+${IMGUI_DIR}/imgui_widgets.cpp
+${IMGUI_DIR}/backends/imgui_impl_glfw.cpp
+${IMGUI_DIR}/backends/imgui_impl_opengl3.cpp)
 
 
 
 add_executable(multi_renderer examples/multirender.cpp)
-target_include_directories(multi_renderer PUBLIC "include/")
 target_link_libraries(multi_renderer PUBLIC glfw GL GLEW glm glwrap)
 
-
-
-
-
+add_executable(imgui_demo examples/imgui_demo.cpp)
+target_link_libraries(imgui_demo PUBLIC glfw GL GLEW glm glwrap imgui)
