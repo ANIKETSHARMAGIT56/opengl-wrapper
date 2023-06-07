@@ -1,3 +1,7 @@
+#include <imgui.h>
+#include <imgui_impl_glfw.h>
+#include <imgui_impl_opengl3.h>
+
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
@@ -13,7 +17,6 @@
 #include <glm/ext/matrix_clip_space.hpp>
 #include <glm/ext/matrix_transform.hpp>
 #include <glm/fwd.hpp>
-
 
 // error handling for newer versions of openGL
 void GLAPIENTRY MessageCallback(GLenum source, GLenum type, GLuint id,
@@ -34,7 +37,7 @@ int main(void) {
     return -1;
   }
   glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
-  glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
+  glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
   glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
   /* Create a windowed mode window and its OpenGL context */
@@ -46,10 +49,31 @@ int main(void) {
     return -1;
   }
 
+
+
   /* Make the window's context current */
   glfwMakeContextCurrent(window);
   std::cout << "openGL version:" << glGetString(GL_VERSION) << std::endl;
-  glfwSwapInterval(1);
+  glfwSwapInterval(0);
+
+  // imgui init
+  // Setup Dear ImGui context
+  IMGUI_CHECKVERSION();
+  ImGui::CreateContext();
+  ImGuiIO &io = ImGui::GetIO();
+  (void)io;
+  io.ConfigFlags |=
+      ImGuiConfigFlags_NavEnableKeyboard; // Enable Keyboard Controls
+  io.ConfigFlags |=
+      ImGuiConfigFlags_NavEnableGamepad; // Enable Gamepad Controls
+
+  // Setup Dear ImGui style
+  ImGui::StyleColorsDark();
+
+  // Setup Platform/Renderer backends
+  ImGui_ImplGlfw_InitForOpenGL(window, true);
+  const char *glsl_version = "#version 130";
+  ImGui_ImplOpenGL3_Init(glsl_version);
 
   if (!(glewInit() == GLEW_OK)) {
     return -1;
@@ -95,23 +119,36 @@ int main(void) {
   shaderCode.CreateShader();
   shaderCode.Bind();
 
-  glm::mat4 proj =
-      glm::ortho(-100.0f, 100.0f, -100.0f, 100.0f, -100.0f, 100.0f);
-  glm::mat4 view = glm::translate(glm::mat4(1.0f), glm::vec3(0, 100, 0));
-  glm::mat4 model = glm::translate(glm::mat4(1.0f), glm::vec3(0, 0, 0));
+  float transform_x = 0;
+  float transform_y = 0;
 
-  glm::mat4 mvp = proj * view * model ;
+  glm::mat4 proj;
+  glm::mat4 view;
+  glm::mat4 model;
+  glm::vec3 model_translate(0.0f, 0.0f, 0.0f);
+  glm::vec3 model2_translate(0.0f, 0.0f, 0.0f);
+
+  proj = glm::ortho(-100.0f, 100.0f, -100.0f, 100.0f, -100.0f, 100.0f);
+  view = glm::translate(glm::mat4(1.0f), model_translate);
+  model = glm::translate(glm::mat4(1.0f), glm::vec3(0, 0, 0));
+
   // initialize texture
   Texture texture("/home/aniket/code/opengl-wrapper/sample.jpg");
   texture.Bind(0);
   shaderCode.setuniform("u_texture", 0);
-  shaderCode.setuniform("u_mvp",mvp);
+  Shader::uniform u_mvp(shaderCode, "u_mvp");
+  u_mvp = proj * view * model;
 
   // initialize the renderer
   Renderer renderer;
+
   while (!glfwWindowShouldClose(window)) {
     /* Render here */
-    renderer.Clear();
+    glfwPollEvents();
+
+    ImGui_ImplOpenGL3_NewFrame();
+    ImGui_ImplGlfw_NewFrame();
+    ImGui::NewFrame();
 
     /*
     bind everything (optional) the Renderer::Draw automatically binds vertex
@@ -122,10 +159,43 @@ int main(void) {
     shaderCode.Bind();
 
     // draw
-    renderer.Draw(vertexarray, indexbuffer, shaderCode);
+    {
+      view = glm::translate(glm::mat4(1.0f), model_translate);
+      u_mvp = proj * view * model;
+      renderer.Draw(vertexarray, indexbuffer, shaderCode);
+    }
+
+    {
+      view = glm::translate(glm::mat4(1.0f), model2_translate);
+      u_mvp = proj * view * model;
+      renderer.Draw(vertexarray, indexbuffer, shaderCode);
+    }
+
+
+    {
+
+      ImGui::Begin("debug window"); // Create a window called "Hello, world!"
+                                    // and append into it.
+
+      ImGui::Text("view transform"); // Display some text (you can use a format
+                                     // strings too
+
+      ImGui::SliderFloat3("transform x 1", &model_translate.x, -100.0f, 100.0f);
+      ImGui::SliderFloat3(
+          "transform x 2", &model2_translate.x, -100.0f,
+          100.0f); // Edit 1 float using a slider from 0.0f to 1.0f
+                   // Edit 1 float using a slider from 0.0f to 1.0f
+
+      ImGui::Text("Application average %.3f ms/frame (%.1f FPS)",
+                  1000.0f / io.Framerate, io.Framerate);
+      ImGui::End();
+    }
+
+    ImGui::Render();
+    ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
     glfwSwapBuffers(window);
-    glfwPollEvents();
+    renderer.Clear();
   }
 
   glfwTerminate();

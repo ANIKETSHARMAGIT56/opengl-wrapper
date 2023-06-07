@@ -4,7 +4,6 @@
 #include <renderer.h>
 #include <shader.h>
 #include <texture.h>
-#include <uniform.h>
 #include <vertexarray.h>
 #include <vertexbuffer.h>
 #include <vertexbufferlayout.h>
