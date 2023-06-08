@@ -89,3 +89,7 @@ std::string load_file(std::string filepath)
     void Shader::Bind(){
         GLDebug(glUseProgram(ShaderProgramID));
     }
+Shader::uniform::uniform(Shader & shad , std::string uniform_name){
+    shader = &shad;
+    name = uniform_name;
+}

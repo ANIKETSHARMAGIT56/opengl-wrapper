@@ -19,7 +19,10 @@ src/shader.cpp
 src/stb_image.cpp
 src/texture.cpp
 )
-find_package(glm REQUIRED)
+
+add_subdirectory(glm/)
+
+
 target_include_directories(${PROJECT_NAME} PUBLIC "include/")
 target_link_libraries(${PROJECT_NAME} PUBLIC glfw GL GLEW glm)
 
@@ -32,7 +35,6 @@ ${IMGUI_DIR}/imgui_widgets.cpp
 ${IMGUI_DIR}/backends/imgui_impl_glfw.cpp
 ${IMGUI_DIR}/backends/imgui_impl_opengl3.cpp
 )
-
 
 
 
