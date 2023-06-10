@@ -3,6 +3,7 @@
 #include <stb_image.h>
 #include <renderer.h>
 #include <GL/glew.h>
+
 Texture::Texture(const std::string& path)
 {
     m_filepath = path;
@@ -16,7 +17,7 @@ Texture::Texture(const std::string& path)
     GLDebug(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE));
 
     GLDebug(glTexImage2D(GL_TEXTURE_2D,0,GL_RGBA8,m_width,m_height,0,GL_RGBA,GL_UNSIGNED_BYTE,m_texturebuffer));
-    GLDebug(glBindTexture(GL_TEXTURE_2D,0));
+    
     if(m_texturebuffer){
         stbi_image_free(m_texturebuffer);
     }
@@ -28,8 +29,8 @@ Texture::~Texture()
     GLDebug(glDeleteTextures(1,&m_RendererID));
 }
 void Texture::Bind(unsigned int slot){
-    GLDebug(glActiveTexture(GL_TEXTURE0 + slot));
-    GLDebug(glBindTexture(GL_TEXTURE_2D,m_RendererID));
+    // GLDebug(glActiveTexture(GL_TEXTURE0 + slot));
+    glBindTextureUnit(slot,m_RendererID);
 }
 void Texture::Unbind(){
     GLDebug(glBindTexture(GL_TEXTURE_2D, 0));

@@ -52,9 +52,9 @@ public:
     int location = get_location(name); 
     GLDebug(glUniformMatrix4fv(location, 1 ,GL_FALSE, glm::value_ptr(vec)));
   }
-    void setuniform(std::string name ,int vec){
+    void setuniform(std::string name ,int size,int *vec){
     int location = get_location(name); 
-      GLDebug(glUniform1i(location,  vec));
+      GLDebug(glUniform1iv(location,size,vec));
   }
   class uniform
   {

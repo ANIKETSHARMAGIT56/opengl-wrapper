@@ -1,3 +1,7 @@
+#include "gldebug.h"
+#include "glm/ext/scalar_constants.hpp"
+#include "glm/trigonometric.hpp"
+#include "shader.h"
 #include <imgui.h>
 #include <imgui_impl_glfw.h>
 #include <imgui_impl_opengl3.h>
@@ -28,6 +32,8 @@ void GLAPIENTRY MessageCallback(GLenum source, GLenum type, GLuint id,
           message);
 }
 
+static float camerax=0.0f;
+static float cameray=0.0f;
 int main(void) {
   // glfw init stuff
   GLFWwindow *window;
@@ -48,13 +54,14 @@ int main(void) {
     std::cout << "failed to create window" << std::endl;
     return -1;
   }
+  // glfwSwapInterval(1);
 
 
 
   /* Make the window's context current */
   glfwMakeContextCurrent(window);
   std::cout << "openGL version:" << glGetString(GL_VERSION) << std::endl;
-  glfwSwapInterval(0);
+  glfwSwapInterval(1);
 
   // imgui init
   // Setup Dear ImGui context
@@ -81,29 +88,38 @@ int main(void) {
 
   glEnable(GL_BLEND);
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-  std::vector<float> positions{
-      -10.5f, -10.5f, 0.0f, 0.0f, // 1
-      10.5f,  -10.5f, 1.0f, 0.0f, // 2
-      10.5f,  10.5f,  1.0f, 1.0f, // 3
-      -10.5f, 10.5f,  0.0f, 1.0f  // 4
+  float positions[] = {
+      -10.5f, -10.5f, /**/ 0.0f, 0.0f, /**/ 0.0f, 0.0f ,1.0f ,1.0f, 0.0f,// 1
+       10.5f, -10.5f, /**/ 1.0f, 0.0f, /**/ 1.0f, 0.0f ,0.0f ,1.0f, 0.0f,// 2
+       10.5f,  10.5f, /**/ 1.0f, 1.0f, /**/ 0.0f, 1.0f ,1.0f ,1.0f, 0.0f,// 3
+      -10.5f,  10.5f, /**/ 0.0f, 1.0f, /**/ 1.0f, 1.0f ,0.0f ,1.0f, 0.0f,// 4
+
+       10.5f, -10.5f, /**/ 0.0f, 0.0f, /**/ 1.0f, 1.0f ,0.0f ,1.0f ,1.0f,// 1
+       30.5f, -10.5f, /**/ 1.0f, 0.0f, /**/ 1.0f, 1.0f ,0.0f ,1.0f ,1.0f,// 2
+       30.5f,  10.5f, /**/ 1.0f, 1.0f, /**/ 1.0f, 1.0f ,0.0f ,1.0f ,1.0f,// 3
+       10.5f,  10.5f, /**/ 0.0f, 1.0f, /**/ 1.0f, 1.0f ,0.0f ,1.0f , 1.0f// 4
   };
-  unsigned int indices[] = {0, 1, 2, 2, 3, 0};
+  unsigned int indices[] = {0, 1, 2, 2, 3, 0,
+                            4 ,5 ,6 ,6, 7, 4};
 
   glEnable(GL_DEBUG_OUTPUT);
   glDebugMessageCallback(MessageCallback, 0);
 
   // initialise the vertex buffer
-  VertexBuffer vertexbuffer(positions.data(), positions.size() * sizeof(float));
+  VertexBuffer vertexbuffer(positions, sizeof(positions) * sizeof(float));
   vertexbuffer.Bind();
 
   // initialise the index buffer
-  IndexBuffer indexbuffer(indices, 6);
+  IndexBuffer indexbuffer(indices, 12);
   indexbuffer.Bind();
 
   // initialize the layout of vertex buffer
   VertexBufferLayout layout;
   layout.Push(2);
   layout.Push(2);
+  layout.Push(4);
+  layout.Push(1);
+
 
   // initialize the vertex array (takes vertex buffer and layout as parameters)
   VertexArray vertexarray;
@@ -128,16 +144,22 @@ int main(void) {
   glm::vec3 model_translate(0.0f, 0.0f, 0.0f);
   glm::vec3 model2_translate(0.0f, 0.0f, 0.0f);
 
-  proj = glm::ortho(-100.0f, 100.0f, -100.0f, 100.0f, -100.0f, 100.0f);
+  proj = glm::perspective(glm::radians(90.0f), 1.0f, 0.0f, 1000.f);
   view = glm::translate(glm::mat4(1.0f), model_translate);
   model = glm::translate(glm::mat4(1.0f), glm::vec3(0, 0, 0));
 
   // initialize texture
-  Texture texture("/home/aniket/code/opengl-wrapper/sample.jpg");
-  texture.Bind(0);
-  shaderCode.setuniform("u_texture", 0);
+
   Shader::uniform u_mvp(shaderCode, "u_mvp");
   u_mvp = proj * view * model;
+  
+  int texturearray[]={2,3};
+  shaderCode.setuniform("u_texture",2,&texturearray[0]);
+
+    int tex2 = load_texture("/home/aniket/code/opengl-wrapper/1475290.jpg");
+  GLDebug( glBindTextureUnit(3,tex2));
+  int tex1 = load_texture("/home/aniket/code/opengl-wrapper/catpfp.png");
+  GLDebug(glBindTextureUnit(2,tex1));
 
   // initialize the renderer
   Renderer renderer;
@@ -159,17 +181,9 @@ int main(void) {
     shaderCode.Bind();
 
     // draw
-    {
       view = glm::translate(glm::mat4(1.0f), model_translate);
       u_mvp = proj * view * model;
       renderer.Draw(vertexarray, indexbuffer, shaderCode);
-    }
-
-    {
-      view = glm::translate(glm::mat4(1.0f), model2_translate);
-      u_mvp = proj * view * model;
-      renderer.Draw(vertexarray, indexbuffer, shaderCode);
-    }
 
 
     {
@@ -181,10 +195,6 @@ int main(void) {
                                      // strings too
 
       ImGui::SliderFloat3("transform x 1", &model_translate.x, -100.0f, 100.0f);
-      ImGui::SliderFloat3(
-          "transform x 2", &model2_translate.x, -100.0f,
-          100.0f); // Edit 1 float using a slider from 0.0f to 1.0f
-                   // Edit 1 float using a slider from 0.0f to 1.0f
 
       ImGui::Text("Application average %.3f ms/frame (%.1f FPS)",
                   1000.0f / io.Framerate, io.Framerate);
