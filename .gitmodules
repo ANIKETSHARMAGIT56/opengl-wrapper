@@ -1,7 +1,7 @@
 [submodule "imgui"]
 	path = imgui
-	url = https://github.com/ocornut/imgui
-	branch = master
+	url = https://github.com/ANIKETSHARMAGIT56/imgui
+	branch = cmake
 [submodule "glm"]
 	path = glm
 	url = https://github.com/g-truc/glm
