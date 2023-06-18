@@ -1,7 +1,3 @@
-#include "gldebug.h"
-#include "glm/ext/scalar_constants.hpp"
-#include "glm/trigonometric.hpp"
-#include "shader.h"
 #include <imgui.h>
 #include <imgui_impl_glfw.h>
 #include <imgui_impl_opengl3.h>
