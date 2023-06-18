@@ -1,3 +1,4 @@
+#include <cstddef>
 #include <imgui.h>
 #include <imgui_impl_glfw.h>
 #include <imgui_impl_opengl3.h>
@@ -17,6 +18,34 @@
 #include <glm/ext/matrix_clip_space.hpp>
 #include <glm/ext/matrix_transform.hpp>
 #include <glm/fwd.hpp>
+
+
+// #define path_to_texture_1  //add path to texture
+// #define path_to_texture_2  //add path to texture
+
+// #define path_to_vertex_shader  //add path to texture
+// #define path_to_fragment_shader  //add path to texture
+
+
+#ifndef path_to_vertex_shader
+#error "define path_to_vertex_shader on line no. 22"
+#endif // !path_to_vertex_shader
+
+
+#ifndef path_to_fragment_shader
+#error "define path_to_fragment_shader on line no. 22"
+#endif // !path_to_fragment_shader
+
+
+#ifndef path_to_texture_1 
+#error "define path_to_texture_1 on line no. 22"
+#endif // !path_to_texture_1
+
+
+#ifndef path_to_texture_2 
+#error "define path_to_texture_1 on line no. 23"
+#endif // !path_to_texture_1
+
 
 // error handling for newer versions of openGL
 void GLAPIENTRY MessageCallback(GLenum source, GLenum type, GLuint id,
@@ -152,9 +181,9 @@ int main(void) {
   int texturearray[]={2,3};
   shaderCode.setuniform("u_texture",2,&texturearray[0]);
 
-    int tex2 = load_texture("/home/aniket/code/opengl-wrapper/1475290.jpg");
+    int tex2 = load_texture(path_to_texture_1);
   GLDebug( glBindTextureUnit(3,tex2));
-  int tex1 = load_texture("/home/aniket/code/opengl-wrapper/catpfp.png");
+  int tex1 = load_texture(path_to_texture_2);
   GLDebug(glBindTextureUnit(2,tex1));
 
   // initialize the renderer
