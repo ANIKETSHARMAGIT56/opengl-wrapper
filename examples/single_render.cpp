@@ -1,4 +1,3 @@
-#include <cstddef>
 #include <imgui.h>
 #include <imgui_impl_glfw.h>
 #include <imgui_impl_opengl3.h>
@@ -23,27 +22,18 @@
 // #define path_to_texture_1  //add path to texture
 // #define path_to_texture_2  //add path to texture
 
-// #define path_to_vertex_shader  //add path to texture
-// #define path_to_fragment_shader  //add path to texture
-
-
-#ifndef path_to_vertex_shader
-#error "define path_to_vertex_shader on line no. 22"
-#endif // !path_to_vertex_shader
-
-
-#ifndef path_to_fragment_shader
-#error "define path_to_fragment_shader on line no. 22"
-#endif // !path_to_fragment_shader
-
 
 #ifndef path_to_texture_1 
+
 #error "define path_to_texture_1 on line no. 22"
+
 #endif // !path_to_texture_1
 
 
 #ifndef path_to_texture_2 
+
 #error "define path_to_texture_1 on line no. 23"
+
 #endif // !path_to_texture_1
 
 

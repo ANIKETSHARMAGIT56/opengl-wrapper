@@ -1,4 +1,6 @@
-// #include <renderer.h>
+#include <cassert>
+#include <cstddef>
+#include <cstdio>
 #include <texture.h>
 #include <stb_image.h>
 #include <renderer.h>
@@ -9,6 +11,10 @@ Texture::Texture(const std::string& path)
     m_filepath = path;
     stbi_set_flip_vertically_on_load(1);
     m_texturebuffer = stbi_load(path.c_str(),&m_width,&m_height, &m_bits_per_pixel, 4);
+    if(m_texturebuffer == NULL){
+        printf("%s not found",path.c_str());
+        exit(1);
+    }
     GLDebug(glGenTextures(1, &m_RendererID));
     GLDebug(glBindTexture(GL_TEXTURE_2D,m_RendererID));
     GLDebug(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR));
