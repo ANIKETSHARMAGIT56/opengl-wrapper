@@ -6,8 +6,7 @@ struct VertexBufferParameters{
     unsigned int type;
     unsigned int count;
     unsigned int normalized;
-    // unsigned int stride;
-    // const void* pointer;
+    // unsigned char normalized;
 };
 
 class VertexBufferLayout{

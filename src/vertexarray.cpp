@@ -6,15 +6,11 @@ VertexArray::VertexArray(){
 VertexArray::~VertexArray(){
     GLDebug(glDeleteVertexArrays(1,&m_RendererID));
 }
-void VertexArray::AddVertexBuffer(const VertexBuffer& vb,const VertexBufferLayout& Layout) const
+void VertexArray::AddVertexBuffer(const glwrap::VertexBuffer& vb,const VertexBufferLayout& Layout) const
 {
     // vb.Bind();
     unsigned int offset=0;
     const auto& elements = Layout.GetParamentersList();
-
-
-     GLDebug(glEnableVertexAttribArray(0));
-    GLDebug(glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (const void *)0));
 
     for (unsigned int i = 0; i < elements.size(); i++)
     {

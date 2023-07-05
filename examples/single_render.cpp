@@ -19,8 +19,8 @@
 #include <glm/fwd.hpp>
 
 
-// #define path_to_texture_1  //add path to texture
-// #define path_to_texture_2  //add path to texture
+#define path_to_texture_1 "/home/aniket/code/flappy-bird/assets/flappy-bird.png" //add path to texture
+#define path_to_texture_2 "/home/aniket/code/flappy-bird/assets/background.jpg" //add path to texture
 
 
 #ifndef path_to_texture_1 
@@ -168,11 +168,11 @@ int main(void) {
   Shader::uniform u_mvp(shaderCode, "u_mvp");
   u_mvp = proj * view * model;
   
-  int texturearray[]={2,3};
+  int texturearray[]={1,2};
   shaderCode.setuniform("u_texture",2,&texturearray[0]);
 
     int tex2 = load_texture(path_to_texture_1);
-  GLDebug( glBindTextureUnit(3,tex2));
+  GLDebug( glBindTextureUnit(1,tex2));
   int tex1 = load_texture(path_to_texture_2);
   GLDebug(glBindTextureUnit(2,tex1));
 

@@ -44,9 +44,13 @@ public:
     int location = get_location(name); 
     GLDebug(glUniform2f(location,  vec[0],  vec[1]));
   }
-  void setuniform(std::string name ,glm::vec1 vec){
+  void setuniform(std::string name ,float vec){
     int location = get_location(name); 
-      GLDebug(glUniform1f(location,  vec[0]));
+      GLDebug(glUniform1f(location,  vec));
+  }
+    void setuniform(std::string name ,int vec){
+    int location = get_location(name); 
+      GLDebug(glUniform1i(location,  vec));
   }
   void setuniform(std::string name ,glm::mat4 vec){
     int location = get_location(name); 

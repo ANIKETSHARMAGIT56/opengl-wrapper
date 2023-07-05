@@ -1,8 +1,7 @@
 // #ifndef RENDERER
 #pragma once
-// #define RENDERER
-// #include "shader.h"
-#include <csignal>
+
+
 #include <vertexarray.h>
 #include <shader.h>
 
