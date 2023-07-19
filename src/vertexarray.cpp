@@ -1,12 +1,12 @@
 #include<renderer.h>
 #include <vertexarray.h>
-VertexArray::VertexArray(){
+GLwrap::VertexArray::VertexArray(){
     GLDebug(glGenVertexArrays(1,&m_RendererID));
 }
-VertexArray::~VertexArray(){
+GLwrap::VertexArray::~VertexArray(){
     GLDebug(glDeleteVertexArrays(1,&m_RendererID));
 }
-void VertexArray::AddVertexBuffer(const glwrap::VertexBuffer& vb,const VertexBufferLayout& Layout) const
+void GLwrap::VertexArray::AddVertexBuffer(const VertexBuffer& vb,const VertexBufferLayout& Layout) const
 {
     // vb.Bind();
     unsigned int offset=0;
@@ -21,12 +21,12 @@ void VertexArray::AddVertexBuffer(const glwrap::VertexBuffer& vb,const VertexBuf
     }
 
 }
-void VertexArray::Bind()const
+void GLwrap::VertexArray::Bind()const
 {
     GLDebug(glBindVertexArray(m_RendererID));
     
 }
-void VertexArray::Unbind()const
+void GLwrap::VertexArray::Unbind()const
 {
     GLDebug(glBindVertexArray(0));
 }

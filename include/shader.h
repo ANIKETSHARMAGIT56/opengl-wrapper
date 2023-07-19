@@ -10,8 +10,10 @@
 #include <typeinfo>
 #include <vector>
 #include <glm/gtc/type_ptr.hpp>
-#define GL_VECTOR 1
-#define GL_MATRIX 2
+
+
+namespace GLwrap{
+
 class Shader {
 
 private:
@@ -72,3 +74,5 @@ public:
       };
   };
 };
+
+}

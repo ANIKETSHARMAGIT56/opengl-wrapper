@@ -23,12 +23,12 @@ void GLFWErrorCallback(int, const char* err_str)
 {
     std::cout << "GLFW Error: " << err_str << std::endl;
 }
-void Renderer::Draw(VertexArray &va ,IndexBuffer& ib, Shader & shader){
+void GLwrap::Renderer::Draw(VertexArray &va ,IndexBuffer& ib, Shader & shader){
     va.Bind();
     ib.Bind();
     shader.Bind();
     GLDebug(glDrawElements(GL_TRIANGLES,ib.GetCount(),GL_UNSIGNED_INT,nullptr));
 }
-void Renderer::Clear(){
+void GLwrap::Renderer::Clear(){
     GLDebug(glClear(GL_COLOR_BUFFER_BIT));
 }

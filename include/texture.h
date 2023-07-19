@@ -1,6 +1,10 @@
 #pragma once
 #include <renderer.h>
 #include <string>
+
+
+namespace GLwrap {
+
 class Texture{
 private:
     std::string m_filepath;
@@ -12,3 +16,4 @@ public:
     ~Texture();
     void Bind(unsigned int slot);
 };
+}

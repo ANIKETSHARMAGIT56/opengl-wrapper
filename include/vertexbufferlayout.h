@@ -2,11 +2,13 @@
 #include <renderer.h>
 #include <vector>
 #include <GL/glew.h>
+
+namespace GLwrap {
+
 struct VertexBufferParameters{
     unsigned int type;
     unsigned int count;
     unsigned int normalized;
-    // unsigned char normalized;
 };
 
 class VertexBufferLayout{
@@ -31,3 +33,4 @@ class VertexBufferLayout{
     }
 
 };
+}

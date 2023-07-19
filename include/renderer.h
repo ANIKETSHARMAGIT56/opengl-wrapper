@@ -4,11 +4,13 @@
 
 #include <vertexarray.h>
 #include <shader.h>
+#include <indexbuffer.h>
+
+namespace GLwrap {
 
 
 void GLFWErrorCallback(int, const char* err_str);
 
-#include <indexbuffer.h>
 class Shader;
 class Renderer{
 public:
@@ -16,4 +18,5 @@ public:
     void Draw(VertexArray & va,IndexBuffer & ib, Shader &shader) ;
 
 };
+}
 // #endif // !RENDERER

@@ -52,7 +52,6 @@ static float cameray=0.0f;
 int main(void) {
   // glfw init stuff
   GLFWwindow *window;
-  glfwSetErrorCallback(GLFWErrorCallback);
   if (!glfwInit()) {
     std::cout << "glfw failed to initialize" << std::endl;
     return -1;
@@ -121,15 +120,15 @@ int main(void) {
   glDebugMessageCallback(MessageCallback, 0);
 
   // initialise the vertex buffer
-  VertexBuffer vertexbuffer(positions, sizeof(positions) * sizeof(float));
+  GLwrap::VertexBuffer vertexbuffer(positions, sizeof(positions) * sizeof(float));
   vertexbuffer.Bind();
 
   // initialise the index buffer
-  IndexBuffer indexbuffer(indices, 12);
+  GLwrap::IndexBuffer indexbuffer(indices, 12);
   indexbuffer.Bind();
 
   // initialize the layout of vertex buffer
-  VertexBufferLayout layout;
+  GLwrap::VertexBufferLayout layout;
   layout.Push(2);
   layout.Push(2);
   layout.Push(4);
@@ -137,12 +136,12 @@ int main(void) {
 
 
   // initialize the vertex array (takes vertex buffer and layout as parameters)
-  VertexArray vertexarray;
+  GLwrap::VertexArray vertexarray;
   vertexarray.Bind();
   vertexarray.AddVertexBuffer(vertexbuffer, layout);
 
   // initialize the shader
-  Shader shaderCode;
+  GLwrap::Shader shaderCode;
   shaderCode.LoadShader(GL_VERTEX_SHADER,
                         "/home/aniket/code/opengl-wrapper/shaders/shader.vert");
   shaderCode.LoadShader(GL_FRAGMENT_SHADER,
@@ -165,19 +164,14 @@ int main(void) {
 
   // initialize texture
 
-  Shader::uniform u_mvp(shaderCode, "u_mvp");
+  GLwrap::Shader::uniform u_mvp(shaderCode, "u_mvp");
   u_mvp = proj * view * model;
   
   int texturearray[]={1,2};
   shaderCode.setuniform("u_texture",2,&texturearray[0]);
 
-    int tex2 = load_texture(path_to_texture_1);
-  GLDebug( glBindTextureUnit(1,tex2));
-  int tex1 = load_texture(path_to_texture_2);
-  GLDebug(glBindTextureUnit(2,tex1));
-
   // initialize the renderer
-  Renderer renderer;
+  GLwrap::Renderer renderer;
 
   while (!glfwWindowShouldClose(window)) {
     /* Render here */

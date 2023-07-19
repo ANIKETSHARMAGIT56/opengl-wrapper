@@ -2,6 +2,8 @@
 #include <shader.h>
 #include <glm/fwd.hpp>
 
+namespace GLwrap{
+
 class uniform
 {
 public:
@@ -14,3 +16,5 @@ public:
     };
 };
 
+
+}

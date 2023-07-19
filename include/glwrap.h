@@ -13,10 +13,7 @@
 #include <glm/glm.hpp>
 
 
-
-
-
-
+namespace GLwrap {
 inline int load_texture(std::string path){
     unsigned int m_RendererID;
         int m_width,m_height,m_bits_per_pixel;
@@ -35,4 +32,5 @@ inline int load_texture(std::string path){
         stbi_image_free(m_texturebuffer);
     }
     return m_RendererID;
+}
 }

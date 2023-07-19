@@ -6,7 +6,7 @@
 #include <renderer.h>
 #include <GL/glew.h>
 #include <iostream>
-Texture::Texture(const std::string& path)
+GLwrap::Texture::Texture(const std::string& path)
 {
     stbi_set_flip_vertically_on_load(1);
     auto m_texturebuffer = stbi_load(path.c_str(),&m_width,&m_height, &m_bits_per_pixel, 4);
@@ -24,11 +24,11 @@ Texture::Texture(const std::string& path)
     }
 }
 
-Texture::~Texture()
+GLwrap::Texture::~Texture()
 {
     GLDebug(glDeleteTextures(1,&m_RendererID));
 }
-void Texture::Bind(unsigned int slot)
+void GLwrap::Texture::Bind(unsigned int slot)
 {
     GLDebug(glBindTextureUnit(1,m_RendererID));
 }
